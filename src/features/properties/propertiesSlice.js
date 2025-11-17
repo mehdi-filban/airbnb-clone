@@ -16,7 +16,7 @@ const initialState = {
       title: 'Luxury Villa',
       location: 'Los Angeles',
       image:
-        'https://images.unsplash.com/photo-1600585154514-1d46fa9b4c8c?auto=format&fit=crop&w=800&q=60',
+        'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBhcnRtZW50fGVufDB8fDB8fHww',
       description: 'A luxurious villa in the heart of the city',
       price: 200,
     },
@@ -25,11 +25,12 @@ const initialState = {
       title: 'Modern Apartment',
       location: 'Chicago',
       image:
-        '"https://images.unsplash.com/photo-1600585154084-7f47243d65a8?auto=format&fit=crop&w=800&q=60',
+        'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXBhcnRtZW50fGVufDB8fDB8fHww',
       description: 'A modern apartment in the heart of the city',
       price: 150,
     },
   ],
+  favorites: [],
   filtered: [],
 }
 
@@ -52,8 +53,19 @@ const propertiesSlice = createSlice({
     resetFilter: state => {
       state.filtered = []
     },
+
+    toggleFavorite: (state, action) => {
+      const id = action.payload
+      const exists = state.favorites.includes(id)
+
+      if (exists) {
+        state.favorites = state.favorites.filter(fId => fId !== id)
+      } else {
+        state.favorites.push(id)
+      }
+    },
   },
 })
 
-export const { filterProperties, resetFilter } = propertiesSlice.actions
+export const { filterProperties, resetFilter, toggleFavorite } = propertiesSlice.actions
 export default propertiesSlice.reducer
