@@ -222,7 +222,7 @@ export default function Landing() {
 
         <footer className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-slate-200 pt-6 text-sm text-slate-600 sm:flex-row">
           <div className="font-semibold text-slate-900">
-            Airbnb Clone <span style={{ color: AIRBNB.primary }}>•</span>
+            Airbnb Clone - By Mehdi Filban <span style={{ color: AIRBNB.primary }}>•</span>
           </div>
           <div>© {new Date().getFullYear()} • React + Tailwind</div>
         </footer>
