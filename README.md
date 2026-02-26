@@ -1,17 +1,59 @@
-# React + Vite
+# 🏡 Airbnb Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Airbnb-inspired web application focused on clean UI, smooth UX, and a scalable component-based architecture.
 
-Currently, two official plugins are available:
+🔗 Live Demo: [Add your deployed link here]  
+🔗 GitHub Repo: https://github.com/mehdi-filban/airbnb-clone  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🎬 Demo
+<!-- Upload your GIF and replace the path below -->
+![App Demo](./assets/demo.gif)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
+- 🎨 Airbnb-inspired modern UI design
+- 🔍 Search & filtering system
+- ❤️ Favorites management with Redux
+- 📄 Property details page
+- 📱 Fully responsive (mobile-first)
+- ⚡ Smooth animations with Framer Motion
+- 🧩 Clean and scalable component architecture
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# airbnb-clone
+---
+
+## 🧠 Tech Stack
+- React
+- Redux Toolkit
+- React Router
+- TailwindCSS
+- Framer Motion
+- Vite
+
+---
+
+## 🎯 Design Approach
+
+This project is built with a strong focus on modern UI/UX, consistency in design language, and reusable component architecture.
+The interface is inspired by Airbnb’s design system, emphasizing clarity, responsiveness, and smooth user interactions.
+
+## 📱 Responsive Design
+
+The application is fully responsive and optimized for:
+
+Mobile devices
+
+Tablets
+
+Desktop screens
+
+## 👨‍💻 Author
+
+Mehdi Filban
+GitHub: https://github.com/mehdi-filban
+
+## ⭐ Support
+
+If you like this project, consider giving it a star ⭐ on GitHub!
