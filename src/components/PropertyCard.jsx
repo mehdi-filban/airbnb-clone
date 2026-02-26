@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleFavorite } from "../features/properties/propertiesSlice";
-
+// Carts Been Re-Designed at 2/26/2026
 const AIRBNB = { primary: "#FF385C", primaryDark: "#E31C5F" };
 
 export default function PropertyCard({ property }) {
