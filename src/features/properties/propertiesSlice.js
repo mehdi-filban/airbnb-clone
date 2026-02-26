@@ -32,27 +32,37 @@ const initialState = {
   ],
   favorites: [],
   filtered: [],
+  isFiltered: false,
 }
 
 const propertiesSlice = createSlice({
   name: 'properties',
   initialState,
   reducers: {
-    filterProperties: (state, action) => {
-      const { location, maxPrice } = action.payload || {}
-      state.filtered = state.list.filter(p => {
-        const matchLocation = location
-          ? p.location.toLowerCase().includes(String(location).toLowerCase())
-          : true
+  filterProperties: (state, action) => {
+    const { location, maxPrice } = action.payload || {}
 
-        const matchPrice = maxPrice ? p.price <= Number(maxPrice) : true
-        return matchLocation && matchPrice
-      })
-    },
+    state.isFiltered = true
 
-    resetFilter: state => {
-      state.filtered = []
-    },
+    const loc = (location ?? "").trim().toLowerCase()
+    const hasLoc = loc.length > 0
+
+    const hasPrice = maxPrice !== "" && maxPrice !== null && maxPrice !== undefined
+    const priceNum = hasPrice ? Number(maxPrice) : null
+
+    state.filtered = state.list.filter((p) => {
+      const matchLocation = hasLoc ? p.location.toLowerCase().includes(loc) : true
+      const matchPrice =
+        hasPrice && !Number.isNaN(priceNum) ? p.price <= priceNum : true
+
+      return matchLocation && matchPrice
+    })
+  },
+
+  resetFilter: (state) => {
+    state.filtered = []
+    state.isFiltered = false
+  },
 
     toggleFavorite: (state, action) => {
       const id = action.payload
