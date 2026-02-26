@@ -8,13 +8,13 @@ export default function PropertyCard({ property }) {
   const isFavorite = useSelector(state => state.properties.favorites.includes(property.id))
 
   const handleFavoriteClick = e => {
-    e.preventDefault() // نذار لینک اجرا بشه
-    e.stopPropagation() // کلیک به Link منتقل نشه
+    e.preventDefault() 
+    e.stopPropagation() 
     dispatch(toggleFavorite(property.id))
   }
 
   return (
-    <Link to={`/property/${property.id}`}>
+    <Link to={`/stays/${property.id}`}>
       <motion.div
         className="border-none rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition bg-white cursor-pointer relative"
         initial={{ opacity: 0, y: 20 }}
