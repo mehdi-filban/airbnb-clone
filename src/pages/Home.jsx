@@ -12,7 +12,7 @@ export default function Home() {
 const { list, filtered, favorites, isFiltered } = useSelector((state) => state.properties)
 
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
+ 
 
   const properties = useMemo(() => {
     const base = isFiltered ? filtered : list
@@ -24,12 +24,12 @@ const { list, filtered, favorites, isFiltered } = useSelector((state) => state.p
     const price = maxPrice === "" || maxPrice == null ? null : Number(maxPrice);
 
     if (!loc && (price == null || Number.isNaN(price))) {
-      setIsFiltered(false);
+      IsFiltered(false);
       dispatch(resetFilter());
       return;
     }
 
-    setIsFiltered(true);
+    isFiltered(true);
     dispatch(filterProperties({ location: loc, maxPrice: price }));
   };
 
@@ -50,7 +50,7 @@ const { list, filtered, favorites, isFiltered } = useSelector((state) => state.p
             {isFiltered && (
               <button
                 onClick={() => {
-                  setIsFiltered(false);
+                  IsFiltered(false);
                   dispatch(resetFilter());
                 }}
                 className="mt-3 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50"
