@@ -21,8 +21,8 @@ export default function PropertyDetails() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Link to="/" className="text-sm text-gray-600 underline">
-        ← Back to home
+      <Link to="/stays" className="text-sm text-gray-600 underline">
+        ← Back to Stays
       </Link>
 
       <div className="mt-4 bg-white rounded-2xl shadow-sm overflow-hidden">
