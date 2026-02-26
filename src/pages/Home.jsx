@@ -9,21 +9,28 @@ const AIRBNB = { primary: "#FF385C", primaryDark: "#E31C5F" };
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { list, filtered, favorites } = useSelector((state) => state.properties);
+const { list, filtered, favorites, isFiltered } = useSelector((state) => state.properties)
 
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   const properties = useMemo(() => {
-    const base = filtered.length ? filtered : list;
+    const base = isFiltered ? filtered : list
     return showOnlyFavorites ? base.filter((p) => favorites.includes(p.id)) : base;
-  }, [filtered, list, favorites, showOnlyFavorites]);
+  }, [filtered, list, favorites, showOnlyFavorites, isFiltered]);
 
   const handleFilter = ({ location, maxPrice }) => {
-    if (!location && !maxPrice) {
+    const loc = (location ?? "").trim();
+    const price = maxPrice === "" || maxPrice == null ? null : Number(maxPrice);
+
+    if (!loc && (price == null || Number.isNaN(price))) {
+      setIsFiltered(false);
       dispatch(resetFilter());
       return;
     }
-    dispatch(filterProperties({ location, maxPrice }));
+
+    setIsFiltered(true);
+    dispatch(filterProperties({ location: loc, maxPrice: price }));
   };
 
   return (
@@ -39,6 +46,19 @@ export default function Home() {
             <p className="mt-2 text-sm text-slate-600">
               Browse listings, filter quickly, and open details.
             </p>
+
+            {isFiltered && (
+              <button
+                onClick={() => {
+                  setIsFiltered(false);
+                  dispatch(resetFilter());
+                }}
+                className="mt-3 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50"
+              >
+                Clear filters
+                <span className="text-slate-500">×</span>
+              </button>
+            )}
           </div>
 
           <button
@@ -49,7 +69,11 @@ export default function Home() {
                 ? "text-white"
                 : "border-slate-200 bg-white text-slate-900 hover:bg-slate-50")
             }
-            style={showOnlyFavorites ? { backgroundColor: AIRBNB.primary, borderColor: AIRBNB.primary } : undefined}
+            style={
+              showOnlyFavorites
+                ? { backgroundColor: AIRBNB.primary, borderColor: AIRBNB.primary }
+                : undefined
+            }
             onMouseEnter={(e) => {
               if (showOnlyFavorites) e.currentTarget.style.backgroundColor = AIRBNB.primaryDark;
             }}
@@ -65,11 +89,23 @@ export default function Home() {
           <SearchBar onFilter={handleFilter} />
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {properties.map((p) => (
-            <PropertyCard key={p.id} property={p} />
-          ))}
-        </div>
+        {/* Empty state وقتی فیلتر شد ولی نتیجه نداشت */}
+        {isFiltered && properties.length === 0 ? (
+          <div className="mt-10 rounded-3xl border border-slate-200 bg-slate-50 p-8 text-center">
+            <div className="text-base font-extrabold text-slate-900">
+              No results found
+            </div>
+            <p className="mt-2 text-sm text-slate-600">
+              Try another location or increase max price.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {properties.map((p) => (
+              <PropertyCard key={p.id} property={p} />
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );
