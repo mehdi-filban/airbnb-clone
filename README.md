@@ -9,7 +9,7 @@ A modern Airbnb-inspired web application focused on clean UI, smooth UX, and a s
 
 ## 🎬 Demo
 <!-- Upload your GIF and replace the path below -->
-![App Demo](./assets/demo.gif)
+![App Demo](./airbnb-clone.gif)
 
 ---
 
