@@ -9,28 +9,30 @@ const AIRBNB = { primary: "#FF385C", primaryDark: "#E31C5F" };
 
 export default function Home() {
   const dispatch = useDispatch();
-const { list, filtered, favorites, isFiltered } = useSelector((state) => state.properties)
+
+  // ✅ isFiltered از redux
+  const { list, filtered, favorites, isFiltered } = useSelector((state) => state.properties);
 
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
- 
 
   const properties = useMemo(() => {
-    const base = isFiltered ? filtered : list
+    const base = isFiltered ? filtered : list;
     return showOnlyFavorites ? base.filter((p) => favorites.includes(p.id)) : base;
   }, [filtered, list, favorites, showOnlyFavorites, isFiltered]);
 
   const handleFilter = ({ location, maxPrice }) => {
     const loc = (location ?? "").trim();
-    const price = maxPrice === "" || maxPrice == null ? null : Number(maxPrice);
+    const hasLoc = loc.length > 0;
 
-    if (!loc && (price == null || Number.isNaN(price))) {
-      IsFiltered(false);
+    const hasPrice = maxPrice !== "" && maxPrice !== null && maxPrice !== undefined;
+    const priceNum = hasPrice ? Number(maxPrice) : null;
+
+    if (!hasLoc && !hasPrice) {
       dispatch(resetFilter());
       return;
     }
 
-    isFiltered(true);
-    dispatch(filterProperties({ location: loc, maxPrice: price }));
+    dispatch(filterProperties({ location: loc, maxPrice: hasPrice ? priceNum : "" }));
   };
 
   return (
@@ -49,14 +51,10 @@ const { list, filtered, favorites, isFiltered } = useSelector((state) => state.p
 
             {isFiltered && (
               <button
-                onClick={() => {
-                  IsFiltered(false);
-                  dispatch(resetFilter());
-                }}
+                onClick={() => dispatch(resetFilter())}
                 className="mt-3 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50"
               >
-                Clear filters
-                <span className="text-slate-500">×</span>
+                Clear filters <span className="text-slate-500">×</span>
               </button>
             )}
           </div>
@@ -69,11 +67,7 @@ const { list, filtered, favorites, isFiltered } = useSelector((state) => state.p
                 ? "text-white"
                 : "border-slate-200 bg-white text-slate-900 hover:bg-slate-50")
             }
-            style={
-              showOnlyFavorites
-                ? { backgroundColor: AIRBNB.primary, borderColor: AIRBNB.primary }
-                : undefined
-            }
+            style={showOnlyFavorites ? { backgroundColor: AIRBNB.primary, borderColor: AIRBNB.primary } : undefined}
             onMouseEnter={(e) => {
               if (showOnlyFavorites) e.currentTarget.style.backgroundColor = AIRBNB.primaryDark;
             }}
@@ -89,12 +83,9 @@ const { list, filtered, favorites, isFiltered } = useSelector((state) => state.p
           <SearchBar onFilter={handleFilter} />
         </div>
 
-        {/* Empty state وقتی فیلتر شد ولی نتیجه نداشت */}
         {isFiltered && properties.length === 0 ? (
           <div className="mt-10 rounded-3xl border border-slate-200 bg-slate-50 p-8 text-center">
-            <div className="text-base font-extrabold text-slate-900">
-              No results found
-            </div>
+            <div className="text-base font-extrabold text-slate-900">No results found</div>
             <p className="mt-2 text-sm text-slate-600">
               Try another location or increase max price.
             </p>
